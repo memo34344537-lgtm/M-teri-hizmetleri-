@@ -151,3 +151,13 @@ async function instagramGonder(aliciId, metin) {
 app.listen(AYARLAR.PORT, () => {
   console.log("Sunucu " + AYARLAR.PORT + " portunda calisiyor.");
 });
+app.listen(AYARLAR.PORT, () => {
+  app.get("/test", async (req, res) => {
+  try {
+    const mesaj = req.query.mesaj || "Merhaba, ürünleriniz neler?";
+    const cevap = await yapayZekaCevapUret("test_kullanici", mesaj);
+    res.send(cevap);
+  } catch (hata) {
+    res.status(500).send("Hata: " + (hata.response?.data ? JSON.stringify(hata.response.data) : hata.message));
+  }
+});
